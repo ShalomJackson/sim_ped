@@ -1,4 +1,5 @@
 # Pedigree-generator
+Authors: Bernice Chavez Rojas and Shalom J
 ## General Info:
 This program uses NetworkX, a Python packages that helps create, manipulate and analyze complex graphs and networks. A recursive function is used to add generation to a family pedigree. 
 
@@ -31,7 +32,9 @@ Recursion is used to add a new generation to the family by increasing curGen by 
 
 Edge list information is saved as a text file that can later be used in the SLiMulation pipeline.
 
-## How to Run 
+## Example on how to run code 
+python GS_Creating_Families_SG_2.py -y 1880 1900 1920 -c toyIPUMS.csv -o Family.nx
 
+## Informative way to run code
 python GS_Creating_Families_SG_2.py -y year1 year2...yearn -c toyIPUMS.csv -o Filename.nx 
 '''This line of code run the program'''
