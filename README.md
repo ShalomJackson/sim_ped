@@ -45,5 +45,7 @@ python GS_Creating_Families_SG_2.py -y year1 year2...yearn -c toyIPUMS.csv -o Fi
 
 ## Parameters
 -y - year to sample
+
 -c - census filepath
+
 -o - output prefix
