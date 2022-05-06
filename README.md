@@ -38,5 +38,7 @@ python GS_Creating_Families_SG_2.py -y 1880 1900 1920 -c toyIPUMS.csv -o Family.
 ```
 
 ## Informative way to run code
+```
 python GS_Creating_Families_SG_2.py -y year1 year2...yearn -c toyIPUMS.csv -o Filename.nx 
+```
 '''This line of code run the program'''
