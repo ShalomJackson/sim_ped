@@ -34,11 +34,16 @@ Edge list information is saved as a text file that can later be used in the SLiM
 
 ## Example on how to run code 
 ```
-python GS_Creating_Families_SG_2.py -y 1880 1900 1920 -c toyIPUMS.csv -o Family
+python GS_Creating_Families_SG_2.py -y 1880 1900 1920 -c toyIPUMS.csv -o Family.nx
 ```
 
 ## Informative way to run code
 ```
-python GS_Creating_Families_SG_2.py -y year1 year2...yearn -c toyIPUMS.csv -o Filename
+python GS_Creating_Families_SG_2.py -y year1 year2...yearn -c toyIPUMS.csv -o Filename.nx 
 ```
 '''This line of code run the program'''
+
+## Parametters 
+-y - year to sample
+-c - census filepath
+-o - output prefix
