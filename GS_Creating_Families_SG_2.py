@@ -17,16 +17,16 @@ def load_args():
 def family(graph, parent1, curGen, finalGenDepth):
     global curPer
     
-    print(curGen, finalGenDepth)
+    #print(curGen, finalGenDepth)
     if(curGen >= finalGenDepth):
         return()
     
-    #print ("running family: parent1:", parent1, "curPer:", curPer)
+    print ("running family: parent1:", parent1, "curPer:", curPer)
     #print ("current generation", curGen)
     
-    print(num_kids)
+    #print(num_kids)
     kid = num_kids[curGen] #random number of kids. CHECK HERE
-    print("# of kids:", kid)
+    #print("# of kids:", kid)
     
     parent2 = curPer + 1
     curPer= curPer + 1
@@ -37,10 +37,10 @@ def family(graph, parent1, curGen, finalGenDepth):
             curPer = curPer + 1
             
             graph.add_edge(parent1, child)  #edge between parent1 and child (curPer)
-            #print ("parent1 + kid:", parent1, child)
+            print ("parent1:", parent1,"kid:", child)
             
             graph.add_edge(parent2, child)
-            #print ("parent2 + kid:", parent2, child)
+            print ("parent2:", parent2,"kid:", child)
             
             family(graph, child, curGen + 1, finalGenDepth) #recursion: adds a new generation
           
@@ -61,7 +61,7 @@ if __name__== '__main__':
  # Check to determine if the years imputed are able to be found in the census file
     years_isec= np.intersect1d(census_df.columns.astype(int),years_to_sim)
     if len(years_to_sim) != len(years_isec):
-        print ('EXIT: Years inputted does not match the tears provided in the census file')
+        print ('EXIT: Years inputted does not match the years provided in the census file')
         exit (0)
     
   # Sample the number id kids to simulate for each generation
