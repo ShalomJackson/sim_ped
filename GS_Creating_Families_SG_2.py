@@ -31,7 +31,8 @@ def family(graph, parent1, curGen, finalGenDepth):
     
     if user_args.verbose:
         print("running family: parent1:", parent1, "curPer:", curPer)
-    
+        
+   
     for i in range(0, kid_num):
             child = curPer + 1
             curPer = curPer + 1
@@ -40,15 +41,18 @@ def family(graph, parent1, curGen, finalGenDepth):
             
             graph.add_edge(parent2, child)
             
-            family(graph, child, curGen + 1, finalGenDepth) #recursion: adds a new generation
-          
+            family(graph, child, curGen + 1, finalGenDepth) #recursion: adds a new generation 
+        
             if user_args.verbose:
                 
                 print("parent1:", parent1, "kid:", child)
                 print("parent2:", parent2, "kid:", child)
+            
+                for sex in range (0, curPer):
+                    nx.set_node_attributes(fam_graph, parent1, name='female')
                 
-
     return
+
 
 if __name__== '__main__':
 
@@ -77,8 +81,12 @@ if __name__== '__main__':
     # Call upon recursive function to simulate family pedigree.
     family(fam_graph, parent1, 0, len(years_to_sim))
     
+    
     # save edge list 
     nx.write_edgelist(fam_graph, f"{user_args.output_prefix}.nx") #save edge list
+    
+    # saving attributes 
+    #nx.set_node_attributes(family, name="sex" )
     
     if user_args.create_plot:
         nx.draw(fam_graph,with_labels=True, font_weight='bold')
