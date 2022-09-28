@@ -4,6 +4,8 @@ import argparse
 import matplotlib.pyplot as plt
 import pandas as pd
 
+sex_map = {0:'male', 1:'female'}
+
 def load_args():
     parser= argparse.ArgumentParser()
     parser.add_argument('-y', '--year_to_sample', nargs='+',type=int)
@@ -24,32 +26,53 @@ def family(graph, parent1, curGen, finalGenDepth):
         return()
     
     # For current parents, will simulate the number of children they have in this gen 
-    kid_num = np.random.choice(kids_dict[years_to_sim[curGen]], size=1)[0] 
-    
+    kid_num = 0
+    while kid_num == 0:
+        kid_num = np.random.choice(kids_dict[years_to_sim[curGen]],size=1)[0]
+        
     parent2 = curPer + 1
     curPer= curPer + 1
     
     if user_args.verbose:
         print("running family: parent1:", parent1, "curPer:", curPer)
         
-   
+    
     for i in range(0, kid_num):
             child = curPer + 1
             curPer = curPer + 1
             
+            print(parent1, parent2, child)
+            graph.add_node(parent1)
             graph.add_edge(parent1, child)  #edge between parent1 and child (curPer)
             
+            graph.add_node(parent2)
             graph.add_edge(parent2, child)
+
+
+            if graph.nodes.data()[parent1]['sex'] == 'male':
+                nx.set_node_attributes(graph, values={parent2: 'female'}, name='sex')
+            else:
+                nx.set_node_attributes(graph, values={parent2: 'male'}, name='sex')
             
-            family(graph, child, curGen + 1, finalGenDepth) #recursion: adds a new generation 
-        
-            if user_args.verbose:
-                
-                print("parent1:", parent1, "kid:", child)
-                print("parent2:", parent2, "kid:", child)
+            sex_label = np.random.choice([0,1], size=1, p=[0.5, 0.5])
+            sex= sex_map[sex_label[0]]
+            nx.set_node_attributes(fam_graph, values={child: sex}, name='sex')
+
+            print(graph.nodes.data())
+            #print(parent2, child)
+            #exit(0)
+
             
-                for sex in range (0, curPer):
-                    nx.set_node_attributes(fam_graph, parent1, name='female')
+            #Create a for loop to iterate through every insivial that was created
+            #for node in fam_graph.nodes:
+            #    nx.set_node_attributes(fam_graph, values={node:'female'}, name='gender')
+            #   print(fam_graph.nodes.data())
+            
+    if user_args.verbose:
+        print("parent1:", parent1, "kid:", child)
+        print("parent2:", parent2, "kid:", child)
+    family(graph, child, curGen + 1, finalGenDepth) #recursion: adds a new generation 
+            
                 
     return
 
@@ -60,9 +83,8 @@ if __name__== '__main__':
     years_to_sim = user_args.year_to_sample
     census_df = pd.read_csv(user_args.census_filepath)
     
-    index = 1
-    parent1 = index
-    fam_graph = nx.MultiDiGraph()
+    parent1 = 1
+    fam_graph = nx.DiGraph()
     cols = []
 
  # Check to determine if the years imputed are able to be found in the census file
@@ -78,13 +100,27 @@ if __name__== '__main__':
         kids_dict[year] = census_df[f'{year}'].to_list()
     
     curPer = 1
+    
+    # Add node and sex attribute for parent 1
+    sex_label = np.random.choice([0,1],size=1, p=[0.5, 0.5])
+    sex = sex_map[sex_label[0]]
+    fam_graph.add_node(1, sex=sex)
+    print (fam_graph.nodes.data())
+
+    
     # Call upon recursive function to simulate family pedigree.
     family(fam_graph, parent1, 0, len(years_to_sim))
     
     
     # save edge list 
     nx.write_edgelist(fam_graph, f"{user_args.output_prefix}.nx") #save edge list
-    
+
+    # getting the nodes to be saved in a pandas data frame
+    sex_dict=nx.get_node_attributes(fam_graph, name=sex)
+    print(sex_dict)
+    #sex_df= pd.DataFrame(zip(sex_dict.keys()),(sex_dict.values()), columns=['ID','Sex'])
+    #sex_df.to_csv("fam_graph_sex.txt", sep='\t', index=False)
+
     # saving attributes 
     #nx.set_node_attributes(family, name="sex" )
     
