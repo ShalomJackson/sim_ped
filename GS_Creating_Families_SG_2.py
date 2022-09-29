@@ -68,10 +68,10 @@ def family(graph, parent1, curGen, finalGenDepth):
             #    nx.set_node_attributes(fam_graph, values={node:'female'}, name='gender')
             #   print(fam_graph.nodes.data())
             
-    if user_args.verbose:
-        print("parent1:", parent1, "kid:", child)
-        print("parent2:", parent2, "kid:", child)
-    family(graph, child, curGen + 1, finalGenDepth) #recursion: adds a new generation 
+            if user_args.verbose:
+                print("parent1:", parent1, "kid:", child)
+                print("parent2:", parent2, "kid:", child)
+            family(graph, child, curGen + 1, finalGenDepth) #recursion: adds a new generation 
             
                 
     return
