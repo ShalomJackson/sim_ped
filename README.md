@@ -40,7 +40,7 @@ python GS_Creating_Families_SG_2.py -y 1880 1900 1920 -c toyIPUMS.csv -o Family.
 ```
 cd folder_location
 cd folder_name
-cd ipums_main
+cd ipums-main
 ```
 
 ## Informative way to run code
