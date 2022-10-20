@@ -36,6 +36,12 @@ Edge list information is saved as a text file that can later be used in the SLiM
 ```
 python GS_Creating_Families_SG_2.py -y 1880 1900 1920 -c toyIPUMS.csv -o Family.nx
 ```
+##Access the code 
+```
+cd folder_location
+cd folder_name
+cd ipums_main
+```
 
 ## Informative way to run code
 ```
